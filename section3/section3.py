@@ -7,6 +7,7 @@ for nome in lista_nomes:
 
     """Tarefa 2 e 3"""
     if len(nome) > 5 and ('n' in nome or 'N' in nome):
+        print(nome)
         print(len(nome))
 
 # Tarefa 4
