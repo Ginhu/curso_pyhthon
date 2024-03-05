@@ -17,6 +17,11 @@ imprimir_nome_idade()
 
 
 def imprimir_argumentos(argumento1='Sem argumento', argumento2='Pois é'):
+    """Tarefa três criar uma função que imprime na tela os argumentos
+        Argumentos:
+            argumento1: aceita qualquer argumento (padrão = 'Sem argumento')
+            argumento2: aceita qualquer argumento (padrão = 'Pois é')
+    """
     print(argumento1, ' - concluindo:', argumento2)
 
 
@@ -29,6 +34,8 @@ imprimir_argumentos(argumento1, argumento2)
 
 
 def calculo_de_decadas():
+    """Tarefa quatro função que retorna a quantidade de décadas vividas pelo
+      usuário"""
     # return idade//10
     return idade_usuario//10
 
