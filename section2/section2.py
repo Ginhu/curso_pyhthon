@@ -1,35 +1,43 @@
-# Comentário
-blockchain = []
+# Tarefa um atribuir a variáveis o nome e idade do usuário
+# nome = input('Por favor digite o seu nome: ')
+# idade = int(input('Agora por favor digite sua idade: '))
+
+nome_usuario = input('Por favor digite o seu nome: ')
+idade_usuario = int(input('Agora por favor digite sua idade: '))
 
 
-def ultimo_elemento():
-    """Retorna o ultimo valor da lista blockchain"""
-    return blockchain[-1]
+def imprimir_nome_idade():
+    """Tarefa dois criar uma função que imprime na tela o nome e a idade
+     em uma string apenas"""
+    # print('nome: ', nome, '- idade: ', idade)
+    print('nome: ', nome_usuario, '- idade: ', idade_usuario)
 
 
-def adicionar_novo(valor_transacao, ultimo_elemento=[1]):
-    """Adiciona um novo valor a lista blockchain
-    Argumentos:
-        valor_transacao: valor a ser adicionado
-        ultimo_elemento: ultimo elemento da lista (padrao = [1])
+imprimir_nome_idade()
+
+
+def imprimir_argumentos(argumento1='Sem argumento', argumento2='Pois é'):
+    """Tarefa três criar uma função que imprime na tela os argumentos
+        Argumentos:
+            argumento1: aceita qualquer argumento (padrão = 'Sem argumento')
+            argumento2: aceita qualquer argumento (padrão = 'Pois é')
     """
-    blockchain.append([ultimo_elemento, valor_transacao])
+    print(argumento1, ' - concluindo:', argumento2)
 
 
-def valor_do_usuario():
-    """Retorna o valor inserido pelo usuario"""
-    entrada_usuario = float(input('Por favor entre um novo valor: '))
-    return entrada_usuario
+argumento1 = input('Digite aqui seu primeiro argumento: ')
+argumento2 = input('Digite aqui seu segundo argumento: ')
+imprimir_argumentos()
+argumento1 = input('Digite aqui seu primeiro argumento: ')
+argumento2 = input('Digite aqui seu segundo argumento: ')
+imprimir_argumentos(argumento1, argumento2)
 
 
-valor_transacao = valor_do_usuario()
-adicionar_novo(valor_transacao)
+def calculo_de_decadas():
+    """Tarefa quatro função que retorna a quantidade de décadas vividas pelo
+      usuário"""
+    # return idade//10
+    return idade_usuario//10
 
-valor_transacao = valor_do_usuario()
-adicionar_novo(ultimo_elemento=ultimo_elemento(),
-               valor_transacao=valor_transacao)
 
-valor_transacao = valor_do_usuario()
-adicionar_novo(valor_transacao, ultimo_elemento())
-
-print(blockchain)
+print(calculo_de_decadas())
