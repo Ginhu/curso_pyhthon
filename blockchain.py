@@ -1,9 +1,10 @@
+import functools
 MINNING_REWARD = 10
 genesis_block = {
-        'previou_hash': '',
-        'index': 0,
-        'transactions': []
-    }
+    'previou_hash': '',
+    'index': 0,
+    'transactions': []
+}
 blockchain = [genesis_block]
 transacoes_abertas = []
 owner = 'Ginhu'
@@ -17,19 +18,23 @@ def hash_block(block):
 def get_balance(participant):
     tx_sender = [[tx['amount'] for tx in block['transactions']
                   if tx['sender'] == participant] for block in blockchain]
-    amount_sent = 0
     open_tx_sender = [tx['amount'] for tx in transacoes_abertas
                       if tx['sender'] == participant]
     tx_sender.append(open_tx_sender)
-    for tx in tx_sender:
-        if len(tx) > 0:
-            amount_sent += tx[0]
+    amount_sent = functools.reduce(
+        lambda tx_sum, tx_amt: tx_sum + tx_amt[0] if len(tx_amt) > 0 else 0,
+        tx_sender, 0)
+    # for tx in tx_sender:
+    #     if len(tx) > 0:
+    #         amount_sent += tx[0]
     tx_recipient = [[tx['amount'] for tx in block['transactions']
                      if tx['receiver'] == participant] for block in blockchain]
-    amount_received = 0
-    for tx in tx_recipient:
-        if len(tx) > 0:
-            amount_received += tx[0]
+    amount_received = functools.reduce(
+        lambda tx_sum, tx_amt: tx_sum + tx_amt[0] if len(tx_amt) > 0 else 0,
+        tx_recipient, 0)
+    # for tx in tx_recipient:
+    #     if len(tx) > 0:
+    #         amount_received += tx[0]
     return amount_received - amount_sent
 
 
@@ -107,7 +112,7 @@ def mine_block():
     block = {
         'previou_hash': hashed_block,
         'index': len(blockchain),
-        'transactions': transacoes_abertas
+        'transactions': copied_transactions
     }
     blockchain.append(block)
     return True
@@ -157,7 +162,7 @@ while condicao_do_loop:
         print(imprimir_valores_blockchain())
         print('Blockchain inválida')
         break
-    print('balance: ', get_balance('Ginhu'))
+    print('balance of {}: {:6.2f}'.format(owner, get_balance(owner)))
 else:
     print('Finalizando programa!')
 
