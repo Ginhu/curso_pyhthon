@@ -1,6 +1,8 @@
 from functools import reduce
 from collections import OrderedDict
 from hash_util import hash_string_256, hash_block
+import json
+import pickle
 MINNING_REWARD = 10
 genesis_block = {
     'previou_hash': '',
@@ -14,10 +16,39 @@ owner = 'Ginhu'
 participants = {'Ginhu'}
 
 
+def save_data():
+    with open('blockchain.p', mode='wb') as f:
+        # f.write(json.dumps(blockchain))
+        # f.write('\n')
+        # f.write(json.dumps(transacoes_abertas))
+        data_save = {
+            'chain': blockchain,
+            'ot': transacoes_abertas
+        }
+        f.write(pickle.dumps(data_save))
+
+
+def load_data():
+    with open('blockchain.p', mode='rb') as f:
+        # file_content = f.readlines()
+        # global blockchain
+        # global transacoes_abertas
+        # blockchain = json.loads(file_content[0][:-1])
+        # transacoes_abertas = json.loads(file_content[1])
+        file_content = pickle.loads(f.read())
+
+        global blockchain
+        global transacoes_abertas
+        blockchain = file_content['chain']
+        transacoes_abertas = file_content['ot']
+
+
+load_data()
+
+
 def valid_proof(transactions, last_hash, proof):
     guess = (str(transactions) + str(last_hash) + str(proof)).encode()
     guess_hash = hash_string_256(guess)
-    print(guess_hash)
     return guess_hash[0:2] == '00'
 
 
@@ -78,6 +109,7 @@ def adicionar_novo(recipient, sender=owner, amount=1.0):
         [('sender', sender), ('receiver', recipient), ('amount', amount)])
     if verify_transaction(transaction):
         transacoes_abertas.append(transaction)
+        save_data()
         participants.add(sender)
         participants.add(recipient)
         return True
@@ -169,6 +201,7 @@ while condicao_do_loop:
     elif escolha_usuario == '2':
         if mine_block():
             transacoes_abertas = []
+            save_data()
     elif escolha_usuario == '3':
         imprimir_valores_blockchain()
     elif escolha_usuario == '4':
